@@ -26,3 +26,23 @@ HOSTNAME=my-domain.com \
     -extensions EXT \
     -config <(printf "[dn]\nCN=${HOSTNAME}\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:${HOSTNAME}\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
 ```
+
+To use VS Code clone over HTTPS using the self-signed certificate you have two options:
+
+1. Add the certicate to git, this will allow you to clone any future repos:
+
+    ```bash
+    git config --global http.sslCAinfo $(pwd)/persistent/certs/[CRT_FILE_GENERATED_ABOVE].crt
+    ```
+
+2. Change sslVerify setting to overwrite security:
+
+    ```bash
+    git config --global http.sslVerify false
+    ```
+
+    Make sure to revert back to avoid leaving open doors.
+
+    ```bash
+    git config --global http.sslVerify true
+    ```
