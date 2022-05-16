@@ -1,0 +1,15 @@
+.DS_Store
+!persistent/reset.sh
+persistent/certs/*
+!persistent/certs
+!persistent/certs/.gitkeep
+persistent/gitlab/config/*
+!persistent/gitlab/config
+!persistent/gitlab/config/.gitkeep
+persistent/gitlab/data/*
+!persistent/gitlab/data
+!persistent/gitlab/data/.gitkeep
+persistent/gitlab/logs/*
+!persistent/gitlab/logs
+!persistent/gitlab/logs/.gitkeep
+!.gitkeep
