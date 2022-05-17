@@ -9,7 +9,7 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         external_url '$EXTERNAL_URL'
         gitlab_rails['gitlab_shell_ssh_port'] = 2224
-        nginx['redirect_http_to_https'] = true
+        # nginx['redirect_http_to_https'] = true
         gitlab_rails['gitlab_email_enabled'] = $EMAIL_FEATURE
         gitlab_rails['gitlab_email_from'] = '$EMAIL_FROM'
         gitlab_rails['gitlab_email_display_name'] = '$EMAIL_SUBJECT'
@@ -26,19 +26,51 @@ services:
       - './persistent/gitlab/config:/etc/gitlab'
       - './persistent/gitlab/data:/var/opt/gitlab'
       - './persistent/gitlab/logs:/var/log/gitlab'
-      - './persistent/certs:/etc/gitlab/ssl'
-  gitlab-runner:
+      # - './persistent/certs:/etc/gitlab/ssl'
+  gitlab-runner-node1:
     image: $RUNNER_VER
-    deploy:
-      mode: replicated
-      replicas: 4
+    restart: "always"
     networks:
       - gitlab
     depends_on:
       - gitlab-web
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
-      - './persistent/certs:/etc/gitlab-runner/certs'
+      - './persistent/runners/node1:/etc/gitlab-runner'
+      #- './persistent/certs:/etc/gitlab-runner/certs'
+  gitlab-runner-node2:
+    image: $RUNNER_VER
+    restart: "always"
+    networks:
+      - gitlab
+    depends_on:
+      - gitlab-web
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - './persistent/runners/node2:/etc/gitlab-runner'
+      #- './persistent/certs:/etc/gitlab-runner/certs'
+  gitlab-runner-node3:
+    image: $RUNNER_VER
+    restart: "always"
+    networks:
+      - gitlab
+    depends_on:
+      - gitlab-web
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - './persistent/runners/node3:/etc/gitlab-runner'
+      #- './persistent/certs:/etc/gitlab-runner/certs'
+  gitlab-runner-node4:
+    image: $RUNNER_VER
+    restart: "always"
+    networks:
+      - gitlab
+    depends_on:
+      - gitlab-web
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - './persistent/runners/node4:/etc/gitlab-runner'
+      #- './persistent/certs:/etc/gitlab-runner/certs'
 networks:
   gitlab:
     name: gitlab-network

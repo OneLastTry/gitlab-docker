@@ -9,13 +9,34 @@ Once everything is up and running you can find the root password by executing:
 sudo docker exec -it gitlab_gitlab-web_1 grep 'Password:' /etc/gitlab/initial_root_password
 ```
 
-If you wish to enable CI/CD you can regiter the runners by providing the token and the URL to your GitLab deployment like below:
+If you wish to enable CI/CD you can regiter the runners by providing the token and the URL to your GitLab deployment like below examples:
 
 ```bash
-sudo docker exec -it gitlab_gitlab-runner_1 gitlab-runner register --url https://my-domain.com/ --registration-token [TOKEN]
+sudo docker exec -it gitlab_gitlab-runner-node1_1 \
+  gitlab-runner register \
+    --non-interactive \
+    --registration-token [TOKEN] \
+    --locked=false \
+    --description docker-stable \
+    --url http://my-domain.com/ \
+    --executor docker \
+    --docker-image alpine:latest \
+    --docker-volumes "/var/run/docker.sock:/var/run/docker.sock" \
+    --docker-network-mode gitlab-network
 ```
 
-To create SSL certificate files execute below from *encore* directory:
+```bash
+sudo docker exec -it gitlab_gitlab-runner-node2_1 \
+  gitlab-runner register \
+    --non-interactive \
+    --registration-token [TOKEN] \
+    --locked=false \
+    --description shell-stable \
+    --url http://my-domain.com/ \
+    --executor shell
+```
+
+*\[experimental]* To create SSL certificate files execute below from *encore* directory:
 
 ```bash
 HOSTNAME=my-domain.com \

@@ -12,4 +12,16 @@ persistent/gitlab/data/*
 persistent/gitlab/logs/*
 !persistent/gitlab/logs
 !persistent/gitlab/logs/.gitkeep
+persistent/runners/node1/*
+!persistent/runners/node1
+!persistent/runners/node1/.gitkeep
+persistent/runners/node2/*
+!persistent/runners/node2
+!persistent/runners/node2/.gitkeep
+persistent/runners/node3/*
+!persistent/runners/node3
+!persistent/runners/node3/.gitkeep
+persistent/runners/node4/*
+!persistent/runners/node4
+!persistent/runners/node4/.gitkeep
 !.gitkeep
